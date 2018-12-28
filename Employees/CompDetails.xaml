@@ -1,0 +1,108 @@
+﻿<Page x:Class="Employees.CompDetails"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Employees"
+      mc:Ignorable="d"
+      Title="Employee - Details" Height="377.675" Width="592.55"  >
+
+    <Grid Margin="10,0,10,10">
+
+        <!--Outer grid has 2 columns-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Put watermark in top left corner of outer grid -->
+        <Image Style="{StaticResource WatermarkImage}" Height="156" Grid.RowSpan="3" Width="181" Grid.ColumnSpan="1" />
+        <Grid Grid.Column="0" Margin="5,126,15,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Button Content="Promotion" Grid.Row="0"  Style="{StaticResource buttonStyle}" Click="Promotion_Click"  />
+            <Button Content="Bonus" Grid.Row="1"  Style="{StaticResource buttonStyle}" Click="Bonus_Click"  />
+            <TextBox Name="BonusBox" Grid.Row="2" TextAlignment="Right" Text="500"/>
+            <Label Content="Enter $500 - 10,000" Grid.Row="3" Style="{StaticResource labelStyle}" />
+        </Grid>
+
+        <!-- Employee details in second column of outer grid -->
+        <Grid Grid.Column="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Employee Details title in first column, first row -->
+            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource headerTextStyle}" Content="Employee Details" />
+
+            <!-- Field name/value labels in remaining rows -->
+            <Label Content="Name:" Grid.Column="0" Grid.Row="1" Style="{StaticResource labelStyle}" />
+            <Label Content="{Binding Name}" Grid.Column="1" Grid.Row="1" Style="{StaticResource labelStyle}" />
+
+            <Label Content="Role:" Grid.Column="0" Grid.Row="2" Style="{StaticResource labelStyle}" />
+            <Label Content="{Binding Role}" Grid.Column="1" Grid.Row="2" Style="{StaticResource labelStyle}" />
+
+            <Label Content="Id:" Grid.Column="0" Grid.Row="3" Style="{StaticResource labelStyle}" />
+            <Label Content="{Binding Id}" Grid.Column="1" Grid.Row="3" Style="{StaticResource labelStyle}" />
+
+            <Label Content="DOB:" Grid.Column="0" Grid.Row="4" Style="{StaticResource labelStyle}" />
+            <Label Content="{Binding DateOfBirth}" Grid.Column="1" Grid.Row="4" Style="{StaticResource labelStyle}" />
+
+            <Label Content="Age:" Grid.Column="0" Grid.Row="5" Style="{StaticResource labelStyle}" />
+            <Label Content="{Binding Age}" Grid.Column="1" Grid.Row="5" Style="{StaticResource labelStyle}" />
+
+            <Label Content="SSN:" Grid.Column="0" Grid.Row="6" Style="{StaticResource labelStyle}" />
+            <Label Content="{Binding SocialSecurityNumber}" Grid.Column="1" Grid.Row="6" Style="{StaticResource labelStyle}" />
+
+            <Label Content="Benefits:" Grid.Column="0" Grid.Row="7" Style="{StaticResource labelStyle}" VerticalAlignment="Bottom" />
+            <Label Name="BenefitsLabel" Content="{Binding PrintBenefits}" Grid.Column="1" Grid.Row="7" Style="{StaticResource labelStyle}" />
+
+            <Label Content="Pay:" Grid.Column="0" Grid.Row="8" Style="{StaticResource labelStyle}" VerticalAlignment="Bottom" />
+            <Label Name="PayLabel" Content="{Binding PrintPay}" Grid.Column="1" Grid.Row="8" Style="{StaticResource labelStyle}" />
+
+            <Label Name="SpareProp1Name" Content="Spare1" Grid.Column="0" Grid.Row="9" Style="{StaticResource labelStyle}" />
+            <Label Name="SpareProp1Value" Content="Value1" Grid.Column="1" Grid.Row="9" Style="{StaticResource labelStyle}"  />
+
+            <Label Name="SpareProp2Name" Content="Spare2" Grid.Column="0" Grid.Row="10" Style="{StaticResource labelStyle}" Margin="0,0,0,1.2" VerticalAlignment="Bottom" />
+            <Label Name="SpareProp2Value" Content="Value2" Grid.Column="1" Grid.Row="10" Style="{StaticResource labelStyle}" />
+            <ListBox Name="SpareProp2List"  Grid.Column="1" Grid.Row="10" SelectionChanged="ListBox_SelectionChanged" 
+                     Width="auto" Height="auto" Visibility="Hidden" />
+        </Grid>
+
+        <Grid Grid.Column="2" Margin="5,229,10,10" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"  />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Button Name="RmReport" Content="Remove Report" Grid.Row="0"  Style="{StaticResource buttonStyle}" Click="RmReport_Click" Margin="-2,10,-2,0" IsEnabled="False"  />
+            <Button Name="AddReport" Content="Add Report" Grid.Row="1"  Style="{StaticResource buttonStyle}" Click="AddReport_Click" Margin="0,10,-3,10" IsEnabled="False" />
+            <ComboBox Name="ComboReport"  Grid.Row="2"  Style="{StaticResource comboBoxStyle}" Margin="10,0,0,12" IsEnabled="False" SelectionChanged="ComboReport_SelectionChanged" />
+        </Grid>
+    </Grid>
+</Page>

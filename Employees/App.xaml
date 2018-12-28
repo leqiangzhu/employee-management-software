@@ -1,0 +1,150 @@
+﻿<Application x:Class="Employees.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:core="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Employees"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Watermark image -->
+        <Style x:Key="WatermarkImage" TargetType="{x:Type Image}">
+            <Setter Property="Source" Value="watermark.png" />
+            <Setter Property="HorizontalAlignment" Value="left" />
+            <Setter Property="VerticalAlignment" Value="top" />
+            <Setter Property="Width" Value="230" />
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+
+        <!-- Header text style -->
+        <Style x:Key="headerTextStyle">
+            <Setter Property="Label.VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Label.FontFamily" Value="Trebuchet MS"></Setter>
+            <Setter Property="Label.FontWeight" Value="Bold"></Setter>
+            <Setter Property="Label.FontSize" Value="18"></Setter>
+            <Setter Property="Label.Foreground" Value="#0066cc"></Setter>
+        </Style>
+
+        <!-- Label style -->
+        <Style x:Key="labelStyle" TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <!-- TextBox style -->
+        <Style x:Key="textBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Width" Value="120" />
+        </Style>
+
+        <!-- Dollar Box style -->
+        <Style x:Key="dollarBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Width" Value="120" />
+        </Style>
+
+        <!-- Combo Box style -->
+        <Style x:Key="comboBoxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Width" Value="120" />
+        </Style>
+
+        <!-- Button style -->
+        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="125" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+
+        <!-- Radio button for Employee type -->
+        <Style x:Key="HorizontalRadio" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Margin" Value="0,5,5,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <RadioButton Focusable="false"
+                         Content="{TemplateBinding ContentPresenter.Content}"
+                         VerticalAlignment="Center"
+                         IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Radio button list for Employee type -->
+        <Style x:Key="HorizontalRadioList" TargetType="{x:Type ListBox}">
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <StackPanel KeyboardNavigation.TabNavigation="Once" IsItemsHost="True" Orientation="Horizontal" Height="25" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <!-- Right justify DataGrid cell  -->
+        <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+
+        <!-- Right justify DataGrid cell in edit mode -->
+        <Style TargetType="TextBox" x:Key="RightCellEdit">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+
+        <!-- Right justify DataGrid header -->
+        <Style x:Key="RightHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        </Style>
+
+        <!-- DataGridTextColumn in edit mode uses tool tip to show error -->
+        <Style x:Key="CellEditStyle" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={RelativeSource Self},
+                                    Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--Expense Category enumeration values-->
+        <ObjectDataProvider x:Key="ExpenseCategory" MethodName="GetValues" ObjectType="{x:Type core:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="local:ExpenseCategory"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!-- Validation error message -->
+        <ControlTemplate x:Key="validationErrorTemplate">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                    <Grid Width="12" Height="12">
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Foreground="White" FontWeight="Heavy" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                               ToolTip="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                            X
+                        </TextBlock>
+                    </Grid>
+                    <TextBlock Foreground="Red" FontWeight="Light" Margin="2,0,0,0" 
+                           Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                </StackPanel>
+                <AdornedElementPlaceholder x:Name="ErrorAdorner" ></AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+
+    </Application.Resources>
+</Application>
